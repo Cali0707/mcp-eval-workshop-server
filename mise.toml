@@ -1,0 +1,14 @@
+min_version = "2025.1.0"
+
+[tools]
+python = "3.12.15"
+uv = "0.8.24"
+
+[tasks.setup]
+description = "Install the server dependencies"
+run = "uv sync --locked"
+
+[tasks.server]
+description = "Run the MCP server on a chosen port"
+usage = 'arg "[port]" help="Port to listen on" default="8000"'
+run = 'PORT="${usage_port?}" uv run --locked python server.py'

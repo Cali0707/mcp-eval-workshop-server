@@ -1,0 +1,8 @@
+[project]
+name = "mcp-eval-workshop-server"
+version = "0.1.0"
+description = "An intentionally ambiguous MCP server for evaluation workshops"
+requires-python = "==3.12.15"
+dependencies = [
+    "mcp>=1.1.0,<2",
+]
