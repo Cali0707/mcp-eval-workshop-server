@@ -1,14 +1,43 @@
 min_version = "2025.1.0"
 
 [tools]
+go = "1.27.1"
+node = "24.21.0"
 python = "3.12.15"
 uv = "0.8.24"
+
+[env]
+_.path = [
+    "./.tools/bin",
+    "./.tools/agents/claude/node_modules/.bin",
+    "./.tools/agents/codex/node_modules/.bin",
+]
 
 [tasks.setup]
 description = "Install the server dependencies"
 run = "uv sync --locked"
 
+[tasks.setup-mcpchecker]
+description = "Install the pinned MCPChecker binary"
+run = 'GOBIN="$PWD/.tools/bin" go install github.com/mcpchecker/mcpchecker/cmd/mcpchecker@v0.0.20'
+
+[tasks.setup-agent-claude]
+description = "Install the Claude Code ACP agent"
+run = "npm install --prefix .tools/agents/claude --no-save --no-audit --no-fund @agentclientprotocol/claude-agent-acp@0.86.0"
+
+[tasks.setup-agent-codex]
+description = "Install the Codex ACP agent"
+run = "npm install --prefix .tools/agents/codex --no-save --no-audit --no-fund @agentclientprotocol/codex-acp@2.1.1"
+
+[tasks.setup-evals]
+description = "Install MCPChecker (agents are installed separately)"
+depends = ["setup-mcpchecker"]
+
 [tasks.server]
 description = "Run the MCP server on a chosen port"
 usage = 'arg "[port]" help="Port to listen on" default="8000"'
 run = 'PORT="${usage_port?}" uv run --locked python server.py'
+
+[tasks.eval]
+description = "Run the workshop evaluations after tasks have been added"
+run = "mcpchecker check eval.yaml"

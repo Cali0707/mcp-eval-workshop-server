@@ -1,0 +1,23 @@
+kind: Eval
+metadata:
+  name: text-processing-workshop
+
+config:
+  # Change this path to select another definition from agents/.
+  agent:
+    type: file
+    path: agents/claude-code.yaml
+
+  mcpConfigFile: mcp-config.yaml
+
+  llmJudge:
+    ref:
+      type: file
+      path: agents/claude-code.yaml
+
+  # Add workshop task definitions anywhere below tasks/.
+  taskSets:
+    - glob: tasks/*.yaml
+      assertions:
+        minToolCalls: 1
+        maxToolCalls: 5

@@ -1,0 +1,5 @@
+kind: Agent
+metadata:
+  name: codex-acp
+acp:
+  cmd: codex-acp

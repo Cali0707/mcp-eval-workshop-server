@@ -1,0 +1,7 @@
+kind: Agent
+metadata:
+  name: opencode-acp
+acp:
+  cmd: opencode
+  args:
+    - acp
